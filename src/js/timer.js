@@ -1,25 +1,21 @@
+import { days, hours, mins, secs } from './update-time';
+
 class CountdownTimer  {
     constructor({selector, targetDate}) {
         this.selector = selector;
         this.targetDate = targetDate;        
-    }
+    };
     start(){
-        const targetDate = new Date(this.targetDate);
+        const currentDate = new Date(this.targetDate);
         this.updateClockface(0);
         setInterval(() => {
             const nowTime = Date.now();
-            const deltaTime = targetDate - nowTime;
+            const deltaTime = currentDate - nowTime;
            this. updateClockface(deltaTime);
         }, 1000);
-    }
-
-    updateClockface(time) {        
-        const days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
-        const hours = this.pad(Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-        const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
-        const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
-
-        const refs = {
+    };
+    updateClockface(time) {
+            const refs = {
             day: document.querySelector(this.selector +' [data-value="days"]'),
             hour: document.querySelector(this.selector + ' [data-value="hours"]'),
             minutes: document.querySelector(this.selector + ' [data-value="mins"]'),
@@ -27,15 +23,11 @@ class CountdownTimer  {
         };
         const { day, hour, minutes, seconds } = refs;        
 
-        day.textContent = `${days}`;
-        hour.textContent = `${hours}`;
-        minutes.textContent = `${mins}`;
-        seconds.textContent = `${secs}`;
-    }
-    
-    pad(value) {
-        return String(value).padStart(2, '0');
-    }
+        day.textContent = days(time);
+        hour.textContent = hours(time);
+        minutes.textContent = mins(time);
+        seconds.textContent = secs(time);
+    };  
 };
 export default CountdownTimer;
 
