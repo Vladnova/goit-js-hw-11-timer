@@ -1,9 +1,13 @@
 import { days, hours, mins, secs } from './update-time';
 
 class CountdownTimer  {
-    constructor({selector, targetDate}) {
+    constructor({ selector, targetDate }) {
         this.selector = selector;
         this.targetDate = targetDate;        
+        this.day = document.querySelector(this.selector + ' [data-value="days"]');
+        this.hour= document.querySelector(this.selector + ' [data-value="hours"]');
+        this.minutes = document.querySelector(this.selector + ' [data-value="mins"]');
+        this.seconds = document.querySelector(this.selector + ' [data-value="secs"]');        
     };
     start(){
         const currentDate = new Date(this.targetDate);
@@ -15,18 +19,10 @@ class CountdownTimer  {
         }, 1000);
     };
     updateClockface(time) {
-            const refs = {
-            day: document.querySelector(this.selector +' [data-value="days"]'),
-            hour: document.querySelector(this.selector + ' [data-value="hours"]'),
-            minutes: document.querySelector(this.selector + ' [data-value="mins"]'),
-            seconds: document.querySelector(this.selector + ' [data-value="secs"]'),
-        };
-        const { day, hour, minutes, seconds } = refs;        
-
-        day.textContent = days(time);
-        hour.textContent = hours(time);
-        minutes.textContent = mins(time);
-        seconds.textContent = secs(time);
+        this.day.textContent = days(time);
+        this.hour.textContent = hours(time);
+        this.minutes.textContent = mins(time);
+        this.seconds.textContent = secs(time);
     };  
 };
 export default CountdownTimer;
